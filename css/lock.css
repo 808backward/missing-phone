@@ -1,0 +1,170 @@
+/* 잠금화면 · 암호 입력 */
+#lock {
+  display: flex;
+  flex-direction: column;
+  touch-action: none;
+  cursor: grab;
+}
+.lock__content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: var(--status-h);
+  transition: transform .4s var(--ease), opacity .4s;
+}
+.lock__content.dragging { transition: none; }
+.lock__padlock { width: 13px; height: 18px; margin-top: 8px; opacity: .95; }
+.lock__date { margin-top: 10px; font-size: 21px; font-weight: 600; letter-spacing: -.2px; opacity: .92; }
+.lock__time {
+  margin-top: -2px;
+  font-size: 98px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -3px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, .93);
+}
+.lock__notifs {
+  width: 100%;
+  margin-top: auto;
+  padding: 0 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.notif {
+  display: flex;
+  gap: 10px;
+  padding: 13px 14px;
+  border-radius: 22px;
+  background: rgba(60, 50, 90, .38);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+  backdrop-filter: blur(28px) saturate(1.5);
+}
+.notif__icon { flex: none; width: 38px; height: 38px; border-radius: 9px; overflow: hidden; }
+.notif__icon svg { width: 100%; height: 100%; }
+.notif__main { flex: 1; min-width: 0; }
+.notif__top { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; }
+.notif__top b { font-weight: 600; }
+.notif__top time { font-size: 13px; opacity: .65; }
+.notif__body {
+  font-size: 15px;
+  line-height: 1.3;
+  opacity: .95;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lock__bottom {
+  position: relative;
+  flex: none;
+  height: 132px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 18px 46px 0;
+}
+.lock__btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 20, 30, .42);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  transition: background .2s, color .2s, transform .2s;
+}
+.lock__btn svg { width: 24px; height: 24px; }
+.lock__btn:active { transform: scale(1.12); }
+.lock__btn.on { background: #fff; color: #000; }
+.lock__hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  text-align: center;
+  font-size: 14px;
+  opacity: .7;
+  animation: hint 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes hint {
+  0%, 100% { transform: translateY(0); opacity: .55; }
+  50% { transform: translateY(-5px); opacity: .9; }
+}
+
+#lock.out-up { animation: lock-out .4s var(--ease) forwards; }
+#lock.in-down { animation: fade-in .35s ease; }
+@keyframes lock-out { to { transform: translateY(-14%); opacity: 0; } }
+
+/* ---------- 암호 ---------- */
+#passcode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: calc(var(--status-h) + 64px);
+  background: rgba(8, 8, 20, .45);
+  -webkit-backdrop-filter: blur(34px) saturate(1.3);
+  backdrop-filter: blur(34px) saturate(1.3);
+  --key: 78px;
+}
+.pass__title { font-size: 20px; font-weight: 500; }
+.pass__dots { display: flex; gap: 24px; margin: 22px 0 56px; }
+.pass__dots i {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  transition: background .1s;
+}
+.pass__dots i.on { background: #fff; }
+.pass__pad {
+  display: grid;
+  grid-template-columns: repeat(3, var(--key));
+  gap: 16px 26px;
+}
+.key {
+  width: var(--key);
+  height: var(--key);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, .16);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: background .35s;
+  touch-action: manipulation;
+}
+.key.pressed { background: rgba(255, 255, 255, .55); transition: none; }
+.key b { font-size: 36px; font-weight: 400; line-height: 1; }
+.key small { margin-top: 1px; font-size: 10px; font-weight: 600; letter-spacing: 2px; }
+.key--zero { grid-column: 2; }
+.pass__foot {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 52px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 52px;
+  font-size: 17px;
+}
+
+#passcode.in-up { animation: fade-in .35s ease; }
+#passcode.in-up .pass__pad { animation: pad-in .45s var(--ease); }
+#passcode.out-down { animation: fade-out .3s ease forwards; }
+#passcode.out-unlock { animation: fade-out .3s ease forwards; }
+@keyframes pad-in { from { transform: translateY(40px); opacity: 0; } }
+
+@media (max-height: 740px) {
+  #passcode { padding-top: calc(var(--status-h) + 28px); --key: 70px; }
+  .pass__dots { margin: 18px 0 36px; }
+  .pass__pad { gap: 13px 24px; }
+  .pass__foot { margin-bottom: 36px; }
+}

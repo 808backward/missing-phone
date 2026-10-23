@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#151515">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="description" content="벤치에서 주운 휴대폰. 잠금화면의 날짜를 보는 순간 알았다.">
+  <title>주운 휴대폰</title>
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/lock.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/apps.css">
+  <link rel="stylesheet" href="css/call.css">
+</head>
+<body>
+  <main id="phone" data-theme="dark">
+    <!-- 배경화면: 밤의 강변 -->
+    <div class="wallpaper" aria-hidden="true">
+      <svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wp-river" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2a1d4d"/><stop offset="1" stop-color="#0d0b1f"/>
+          </linearGradient>
+        </defs>
+        <g fill="#fff">
+          <circle cx="40" cy="120" r="1"/><circle cx="96" cy="64" r=".8"/><circle cx="150" cy="150" r="1.1"/>
+          <circle cx="232" cy="90" r=".9"/><circle cx="330" cy="130" r="1"/><circle cx="360" cy="40" r=".7"/>
+          <circle cx="280" cy="210" r=".8"/><circle cx="60" cy="260" r=".9"/><circle cx="190" cy="250" r=".7"/>
+        </g>
+        <path d="M318 318a30 30 0 1 0 18 51 25 25 0 0 1-18-51z" fill="#f6efd6" opacity=".9"/>
+        <path d="M0 610h28v-22h18v-30h22v40h16v-56h26v34h20v-18h24v48h18v-64h30v40h20v-26h22v52h18v-36h26v24h22v-44h28v50h12v20H0z" fill="#170f2e"/>
+        <path d="M-10 640 C 90 600 160 660 400 618 L400 844 L-10 844z" fill="url(#wp-river)"/>
+        <g stroke="#ffcf8a" stroke-linecap="round" opacity=".55">
+          <path d="M70 668h40M150 690h60M260 672h36M110 716h30M230 740h56" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- 상태바 -->
+    <header class="status" aria-hidden="true">
+      <span class="status__time" data-clock></span>
+      <div class="island"></div>
+      <div class="status__icons">
+        <svg class="ico-silent" viewBox="0 0 16 16"><path d="M8 2.2c-2.3 0-4 1.8-4 4.2v3.2L2.8 11.4h10.4L12 9.6V6.4c0-2.4-1.7-4.2-4-4.2zM6.4 12.6a1.6 1.6 0 0 0 3.2 0z" fill="currentColor"/><path d="M2.5 2.5l11 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <svg class="ico-cell" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg class="ico-wifi" viewBox="0 0 16 12"><path d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.2-1.3A10.8 10.8 0 0 0 8 .4 10.8 10.8 0 0 0 .5 3.4l1.2 1.3A9 9 0 0 1 8 2.2zm0 3.4c1.5 0 2.8.6 3.9 1.5l1.2-1.3A7.4 7.4 0 0 0 8 3.8a7.4 7.4 0 0 0-5.1 2l1.2 1.3c1-.9 2.4-1.5 3.9-1.5zm0 3.4c.6 0 1.1.2 1.5.6L8 11.4 6.5 9.6c.4-.4.9-.6 1.5-.6z"/></svg>
+        <span class="battery"><span class="battery__level" style="width:73%"></span><span class="battery__text">73</span></span>
+      </div>
+    </header>
+
+    <!-- 잠금화면 -->
+    <section id="lock" class="screen">
+      <div class="lock__content">
+        <svg class="lock__padlock" viewBox="0 0 14 19" aria-hidden="true"><path d="M3.2 8V5.6a3.8 3.8 0 0 1 7.6 0V8" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="0.5" y="7.6" width="13" height="10.9" rx="2.4" fill="currentColor"/></svg>
+        <div class="lock__date" data-date></div>
+        <div class="lock__time" data-clock></div>
+        <ul class="lock__notifs"></ul>
+      </div>
+      <div class="lock__bottom">
+        <button class="lock__btn" data-lock="flash" aria-label="손전등">
+          <svg viewBox="0 0 24 24"><path d="M8 2.5h8v3.2l-2 3.3v12a1.5 1.5 0 0 1-1.5 1.5h-1A1.5 1.5 0 0 1 10 21V9L8 5.7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="1.3" fill="currentColor"/></svg>
+        </button>
+        <p class="lock__hint">위로 쓸어 올려 잠금 해제</p>
+        <button class="lock__btn" data-lock="camera" aria-label="카메라">
+          <svg viewBox="0 0 24 24"><path d="M4 7.5h3.2L8.8 5h6.4l1.6 2.5H20a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 20 19.5H4A1.5 1.5 0 0 1 2.5 18V9A1.5 1.5 0 0 1 4 7.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13.2" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- 암호 입력 -->
+    <section id="passcode" class="screen hidden">
+      <p class="pass__title">암호 입력</p>
+      <div class="pass__dots"><i></i><i></i><i></i><i></i></div>
+      <div class="pass__pad"></div>
+      <div class="pass__foot">
+        <button data-pass="sos">긴급 구조</button>
+        <button data-pass="cancel">취소</button>
+      </div>
+    </section>
+
+    <!-- 홈 -->
+    <section id="home" class="screen hidden">
+      <div class="home__grid"></div>
+      <button class="home__search">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="6.8" cy="6.8" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m10.6 10.6 3.9 3.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        검색
+      </button>
+      <nav class="dock"></nav>
+    </section>
+
+    <!-- 앱 -->
+    <section id="app" class="screen hidden">
+      <header class="app__bar">
+        <button class="app__back"><span>뒤로</span></button>
+        <h1 class="app__title"></h1>
+        <div class="app__action"></div>
+      </header>
+      <div class="app__body"></div>
+    </section>
+
+    <!-- 전화 수신 · 알람 · 엔딩 -->
+    <section id="call" class="hidden"></section>
+
+    <!-- 알림 배너 -->
+    <div id="toast" class="hidden" role="status"></div>
+
+    <!-- 홈 인디케이터 -->
+    <div id="gesture" aria-label="홈으로"><span></span></div>
+  </main>
+
+  <noscript>이 페이지는 JavaScript가 필요합니다.</noscript>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

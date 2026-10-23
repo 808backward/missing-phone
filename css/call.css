@@ -1,0 +1,124 @@
+/* 전화 수신 · 알람 · 엔딩 오버레이 */
+#call {
+  position: absolute;
+  inset: 0;
+  z-index: 75;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  animation: call-in .45s var(--ease);
+}
+@keyframes call-in { from { opacity: 0; transform: scale(1.06); } }
+.call__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(48, 44, 72, .82), rgba(12, 12, 18, .94));
+  -webkit-backdrop-filter: blur(40px) saturate(1.4);
+  backdrop-filter: blur(40px) saturate(1.4);
+}
+
+/* ---------- 전화 ---------- */
+.call__info { margin-top: calc(var(--status-h) + 64px); text-align: center; padding: 0 24px; }
+.call__name { font-size: 34px; font-weight: 400; letter-spacing: -.3px; }
+.call__sub { margin-top: 6px; font-size: 17px; opacity: .7; font-variant-numeric: tabular-nums; }
+.call--ended .call__sub { opacity: 1; color: #ff6961; }
+.call__captions {
+  margin-top: 56px;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.call__captions p { animation: caption-in .5s var(--ease); }
+@keyframes caption-in { from { opacity: 0; transform: translateY(8px); } }
+
+.call__actions {
+  margin-top: auto;
+  margin-bottom: 92px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 46px;
+}
+.call__act { display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 15px; }
+.call__btn {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: filter .15s;
+}
+.call__btn:active { filter: brightness(.8); }
+.call__btn svg { width: 34px; height: 34px; }
+.call__btn--decline { background: #ff3b30; }
+.call__btn--decline svg { transform: rotate(135deg); }
+.call__btn--accept { background: #34c759; }
+.call--ringing .call__btn--accept svg { animation: phone-jiggle 1.3s ease-in-out infinite; }
+@keyframes phone-jiggle {
+  0%, 50%, 100% { transform: rotate(0); }
+  10%, 30% { transform: rotate(-14deg); }
+  20%, 40% { transform: rotate(14deg); }
+}
+.call--active .call__actions { justify-content: center; }
+.call--active .call__act--accept { display: none; }
+.call--active .call__act--decline span { font-size: 0; }
+.call--active .call__act--decline span::after { content: '종료'; font-size: 15px; }
+.call--ended .call__actions { opacity: .4; pointer-events: none; }
+
+/* ---------- 알람 ---------- */
+.call--alarm .call__bg { background: linear-gradient(180deg, rgba(20, 16, 40, .7), rgba(8, 8, 14, .9)); }
+.alarm__head { margin-top: calc(var(--status-h) + 40px); text-align: center; }
+.alarm__time { font-size: 92px; font-weight: 600; letter-spacing: -3px; line-height: 1; font-variant-numeric: tabular-nums; }
+.alarm__label { margin-top: 14px; font-size: 20px; font-weight: 500; animation: alarm-pulse 1.1s ease-in-out infinite; }
+@keyframes alarm-pulse { 50% { opacity: .55; } }
+.alarm__actions {
+  margin-top: auto;
+  margin-bottom: 70px;
+  width: 100%;
+  padding: 0 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.alarm__snooze {
+  width: 100%;
+  height: 64px;
+  border-radius: 32px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  background: #ff9f0a;
+}
+.alarm__stop {
+  width: 100%;
+  height: 56px;
+  border-radius: 28px;
+  font-size: 18px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, .18);
+}
+
+/* ---------- 엔딩 ---------- */
+.call--end { justify-content: center; animation: fade-in 1.2s ease; }
+.call--end .call__bg { background: rgba(0, 0, 0, .78); }
+.end__card { padding: 0 34px; text-align: center; }
+.end__card small { font-size: 12px; letter-spacing: 4px; opacity: .5; }
+.end__card h2 { margin-top: 14px; font-size: 26px; font-weight: 600; }
+.end__card p { margin-top: 22px; font-size: 16px; line-height: 1.75; opacity: .88; }
+.end__actions { margin-top: 44px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.end__restart {
+  padding: 13px 30px;
+  border-radius: 26px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  background: #fff;
+}
+.end__stay { font-size: 15px; opacity: .6; padding: 8px; }
